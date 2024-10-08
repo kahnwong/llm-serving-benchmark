@@ -4,3 +4,7 @@ results
 
 # llamafile
 *.llamafile
+
+# python
+.venv
+__pycache__
