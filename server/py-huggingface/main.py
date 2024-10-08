@@ -1,27 +1,40 @@
 import torch
-from accelerate import Accelerator
 from transformers import AutoModelForCausalLM
 from transformers import AutoTokenizer
 
-if torch.backends.mps.is_available():
-    active_device = torch.device("mps")
-elif torch.cuda.is_available():
-    active_device = torch.device("cuda", 0)
-else:
-    active_device = torch.device("cpu")
 
-accelerator = Accelerator()
-print("Accelerator device: ", accelerator.device)
+model_id = "meta-llama/Meta-Llama-3-8B-Instruct"
 
-tokenizer = AutoTokenizer.from_pretrained("google/gemma-2-2b-it")
+tokenizer = AutoTokenizer.from_pretrained(model_id)
 model = AutoModelForCausalLM.from_pretrained(
-    "google/gemma-2-2b-it",
-    device_map=active_device,
+    model_id,
     torch_dtype=torch.bfloat16,
+    device_map="cpu",
 )
 
-input_text = "Write me a poem about Machine Learning."
-input_ids = tokenizer(input_text, return_tensors="pt").to(active_device)
+messages = [
+    {
+        "role": "system",
+        "content": "You are a pirate chatbot who always responds in pirate speak!",
+    },
+    {"role": "user", "content": "Who are you?"},
+]
 
-outputs = model.generate(**input_ids, max_new_tokens=32)
-print(tokenizer.decode(outputs[0]))
+print("start tokenizer")
+input_ids = tokenizer.apply_chat_template(
+    messages, add_generation_prompt=True, return_tensors="pt"
+).to(model.device)
+
+terminators = [tokenizer.eos_token_id, tokenizer.convert_tokens_to_ids("<|eot_id|>")]
+
+print("start generating text")
+outputs = model.generate(
+    input_ids,
+    max_new_tokens=256,
+    eos_token_id=terminators,
+    do_sample=True,
+    temperature=0.6,
+    top_p=0.9,
+)
+response = outputs[0][input_ids.shape[-1] :]
+print(tokenizer.decode(response, skip_special_tokens=True))
