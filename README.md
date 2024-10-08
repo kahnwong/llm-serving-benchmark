@@ -23,7 +23,7 @@
 
 ## Base Model
 
-Phi-3-medium-128k-instruct
+Meta-Llama-3-8B-Instruct
 
 
 ## Init

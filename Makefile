@@ -1,2 +1,2 @@
 cpp-llamafile-start:
-	./server/cpp-llamafile/Phi-3-medium-128k-instruct.Q6_K.llamafile
+	./server/cpp-llamafile/Meta-Llama-3-8B-Instruct.Q4_0.llamafile

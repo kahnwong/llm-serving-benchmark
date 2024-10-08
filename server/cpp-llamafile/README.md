@@ -5,6 +5,6 @@ Ref: <https://github.com/Mozilla-Ocho/llamafile>
 ## Setup
 
 ```bash
-wget https://huggingface.co/Mozilla/Phi-3-medium-128k-instruct-llamafile/resolve/main/Phi-3-medium-128k-instruct.Q6_K.llamafile
-chmod +x Phi-3-medium-128k-instruct.Q6_K.llamafile
+wget https://huggingface.co/Mozilla/Meta-Llama-3-8B-Instruct-llamafile/resolve/main/Meta-Llama-3-8B-Instruct.Q4_0.llamafile
+chmod +x Meta-Llama-3-8B-Instruct.Q4_0.llamafile
 ```
