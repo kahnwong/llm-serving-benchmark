@@ -7,3 +7,4 @@ results
 
 # python
 .venv
+__pycache__
