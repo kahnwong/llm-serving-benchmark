@@ -13,7 +13,7 @@ pipeline = transformers.pipeline(
 )
 
 sequences = pipeline(
-    'The TinyLlama project aims to pretrain a 1.1B Llama model on 3 trillion tokens. With some proper optimization, we can achieve this within a span of "just" 90 days using 16 A100-40G GPUs 🚀🚀. The training has started on 2023-09-01.',
+    "How many helicopters can a human eat in one sitting?",
     do_sample=True,
     top_k=10,
     num_return_sequences=1,

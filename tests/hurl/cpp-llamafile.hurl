@@ -6,7 +6,7 @@ Authorization: Bearer no-key
   "messages": [
       {
           "role": "user",
-          "content": "Write a limerick about python exceptions"
+          "content": "How many helicopters can a human eat in one sitting?"
       }
     ]
 }
