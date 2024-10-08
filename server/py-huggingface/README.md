@@ -1,3 +1,3 @@
 # HuggingFace
 
-Ref: <https://huggingface.co/TinyLlama/TinyLlama_v1.1>
+Ref: <https://huggingface.co/TinyLlama/TinyLlama-1.1B-Chat-v1.0>
