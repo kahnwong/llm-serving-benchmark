@@ -1,40 +1,25 @@
 import torch
-from transformers import AutoModelForCausalLM
+import transformers
 from transformers import AutoTokenizer
 
 
-model_id = "meta-llama/Meta-Llama-3-8B-Instruct"
-
-tokenizer = AutoTokenizer.from_pretrained(model_id)
-model = AutoModelForCausalLM.from_pretrained(
-    model_id,
-    torch_dtype=torch.bfloat16,
-    device_map="cpu",
+model = "TinyLlama/TinyLlama_v1.1"
+tokenizer = AutoTokenizer.from_pretrained(model)
+pipeline = transformers.pipeline(
+    "text-generation",
+    model=model,
+    torch_dtype=torch.float16,
+    device_map="auto",
 )
 
-messages = [
-    {
-        "role": "system",
-        "content": "You are a pirate chatbot who always responds in pirate speak!",
-    },
-    {"role": "user", "content": "Who are you?"},
-]
-
-print("start tokenizer")
-input_ids = tokenizer.apply_chat_template(
-    messages, add_generation_prompt=True, return_tensors="pt"
-).to(model.device)
-
-terminators = [tokenizer.eos_token_id, tokenizer.convert_tokens_to_ids("<|eot_id|>")]
-
-print("start generating text")
-outputs = model.generate(
-    input_ids,
-    max_new_tokens=256,
-    eos_token_id=terminators,
+sequences = pipeline(
+    'The TinyLlama project aims to pretrain a 1.1B Llama model on 3 trillion tokens. With some proper optimization, we can achieve this within a span of "just" 90 days using 16 A100-40G GPUs 🚀🚀. The training has started on 2023-09-01.',
     do_sample=True,
-    temperature=0.6,
-    top_p=0.9,
+    top_k=10,
+    num_return_sequences=1,
+    repetition_penalty=1.5,
+    eos_token_id=tokenizer.eos_token_id,
+    max_length=500,
 )
-response = outputs[0][input_ids.shape[-1] :]
-print(tokenizer.decode(response, skip_special_tokens=True))
+for seq in sequences:
+    print(f"Result: {seq['generated_text']}")
