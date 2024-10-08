@@ -1,12 +1,11 @@
 # LLM Serving Benchmark
 
-Compare serving latency with following frameworks:
+## Frameworks
 
 ### Python
 
 - pytorch
 - vllm
-
 
 ### Go
 
@@ -20,3 +19,15 @@ Compare serving latency with following frameworks:
 ### C++
 
 - llamafile
+
+
+## Base Model
+
+Meta-Llama-3-8B-Instruct
+
+
+## Init
+
+```bash
+mkdir results  # for storing benchmark results
+```
