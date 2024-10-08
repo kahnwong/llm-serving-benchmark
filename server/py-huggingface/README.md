@@ -1,3 +1,3 @@
 # HuggingFace
 
-Ref: <https://huggingface.co/meta-llama/Meta-Llama-3-8B-Instruct>
+Ref: <https://huggingface.co/TinyLlama/TinyLlama_v1.1>
