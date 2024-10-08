@@ -1,20 +1,17 @@
 import torch
-import transformers
 from fastapi import FastAPI
 from pydantic import BaseModel
-from transformers import AutoTokenizer
+from transformers import pipeline
 
-app = FastAPI(title="py-huggingface")
 
-model = "TinyLlama/TinyLlama_v1.1"
-tokenizer = AutoTokenizer.from_pretrained(model)
-
-pipeline = transformers.pipeline(
+pipe = pipeline(
     "text-generation",
-    model=model,
-    torch_dtype=torch.float16,
+    model="TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+    torch_dtype=torch.bfloat16,
     device_map="auto",
 )
+
+app = FastAPI(title="py-huggingface")
 
 
 class RequestItem(BaseModel):
@@ -24,18 +21,24 @@ class RequestItem(BaseModel):
 
 @app.post("/")
 async def main(request: RequestItem):
-    sequences = pipeline(
-        request.content,
+    messages = [
+        {
+            "role": "system",
+            "content": "You are a helpful AI assistant.",
+        },
+        {"role": "user", "content": request.content},
+    ]
+
+    prompt = pipe.tokenizer.apply_chat_template(
+        messages, tokenize=False, add_generation_prompt=True
+    )
+    outputs = pipe(
+        prompt,
+        max_new_tokens=256,
         do_sample=True,
-        top_k=10,
-        num_return_sequences=1,
-        repetition_penalty=1.5,
-        eos_token_id=tokenizer.eos_token_id,
-        max_length=500,
+        temperature=0.7,
+        top_k=50,
+        top_p=0.95,
     )
 
-    response = ""
-    for seq in sequences:
-        response += seq["generated_text"]
-
-    return {"content": response}
+    return {"content": (outputs[0]["generated_text"])}
