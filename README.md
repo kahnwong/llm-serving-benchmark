@@ -5,7 +5,6 @@
 ### Python
 
 - huggingface
-- vllm
 
 ### Go
 
@@ -23,7 +22,7 @@
 
 ## Base Model
 
-Meta-Llama-3-8B-Instruct
+TinyLlama-1.1B-Chat-v1.0
 
 
 ## Init
