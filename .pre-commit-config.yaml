@@ -43,10 +43,3 @@ repos:
     rev: v3.13.0
     hooks:
       - id: reorder-python-imports
-  # ----------------------- RUST -----------------------
-  - repo: https://github.com/doublify/pre-commit-rust
-    rev: v1.0
-    hooks:
-      - id: fmt
-      - id: cargo-check
-      - id: clippy

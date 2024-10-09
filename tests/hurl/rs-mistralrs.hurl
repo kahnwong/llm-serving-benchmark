@@ -1,8 +1,7 @@
-POST http://localhost:11434/api/chat
+POST http://localhost:1234/v1/chat/completions
 Content-Type: application/json
 {
-  "model": "gemma2:2b-instruct-q4_0",
-  "stream": false,
+  "model": "mistral.rs",
   "messages": [
       {
           "role": "user",

@@ -2,29 +2,16 @@
 
 ## Frameworks
 
-### Python
-
-- huggingface
-- vllm
-
-### Go
-
-- ollama
-
-### Rust
-
-- candle-serve
-- mistralrs
-
-### C++
-
-- llamafile
-
+| Language | Framework   |
+|----------|-------------|
+| C++      | Llamafile   |
+| Go       | Ollama      |
+| Python   | HuggingFace |
+| Rust     | mistral.rs  |
 
 ## Base Model
 
-Meta-Llama-3-8B-Instruct
-
+gemma-2-2b-it
 
 ## Init
 
