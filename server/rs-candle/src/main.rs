@@ -18,18 +18,6 @@ const DEFAULT_PROMPT: &str = "My favorite theorem is ";
 
 #[derive(Clone, Debug, Copy, PartialEq, Eq, ValueEnum)]
 enum Which {
-    V1,
-    V2,
-    V3,
-    V31,
-    V3Instruct,
-    V31Instruct,
-    V32_1b,
-    V32_1bInstruct,
-    V32_3b,
-    V32_3bInstruct,
-    #[value(name = "solar-10.7b")]
-    Solar10_7B,
     #[value(name = "tiny-llama-1.1b-chat")]
     TinyLlama1_1BChat,
 }
@@ -84,7 +72,7 @@ struct Args {
     revision: Option<String>,
 
     /// The model size to use.
-    #[arg(long, default_value = "v3")]
+    #[arg(long, default_value = "tiny-llama-1.1b-chat")]
     which: Which,
 
     #[arg(long)]
@@ -115,17 +103,6 @@ fn main() -> Result<()> {
     let (llama, tokenizer_filename, mut cache, config) = {
         let api = Api::new()?;
         let model_id = args.model_id.unwrap_or_else(|| match args.which {
-            Which::V1 => "Narsil/amall-7b".to_string(),
-            Which::V2 => "meta-llama/Llama-2-7b-hf".to_string(),
-            Which::V3 => "meta-llama/Meta-Llama-3-8B".to_string(),
-            Which::V3Instruct => "meta-llama/Meta-Llama-3-8B-Instruct".to_string(),
-            Which::V31 => "meta-llama/Meta-Llama-3.1-8B".to_string(),
-            Which::V31Instruct => "meta-llama/Meta-Llama-3.1-8B-Instruct".to_string(),
-            Which::V32_1b => "meta-llama/Llama-3.2-1B".to_string(),
-            Which::V32_1bInstruct => "meta-llama/Llama-3.2-1B-Instruct".to_string(),
-            Which::V32_3b => "meta-llama/Llama-3.2-3B".to_string(),
-            Which::V32_3bInstruct => "meta-llama/Llama-3.2-3B-Instruct".to_string(),
-            Which::Solar10_7B => "upstage/SOLAR-10.7B-v1.0".to_string(),
             Which::TinyLlama1_1BChat => "TinyLlama/TinyLlama-1.1B-Chat-v1.0".to_string(),
         });
         println!("loading the model weights from {model_id}");
@@ -138,18 +115,7 @@ fn main() -> Result<()> {
         let config = config.into_config(args.use_flash_attn);
 
         let filenames = match args.which {
-            Which::V1
-            | Which::V2
-            | Which::V3
-            | Which::V3Instruct
-            | Which::V31
-            | Which::V31Instruct
-            | Which::V32_3b
-            | Which::V32_3bInstruct
-            | Which::Solar10_7B => {
-                candle_server_utils::hub_load_safetensors(&api, "model.safetensors.index.json")?
-            }
-            Which::V32_1b | Which::V32_1bInstruct | Which::TinyLlama1_1BChat => {
+             Which::TinyLlama1_1BChat => {
                 vec![api.get("model.safetensors")?]
             }
         };

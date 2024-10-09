@@ -1,7 +1,7 @@
 POST http://localhost:11434/api/chat
 Content-Type: application/json
 {
-  "model": "tinyllama:1.1b-chat",
+  "model": "gemma2:2b-instruct-q4_0",
   "stream": false,
   "messages": [
       {

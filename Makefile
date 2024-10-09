@@ -1,6 +1,6 @@
 cpp-llamafile-start:
-	./server/cpp-llamafile/TinyLlama-1.1B-Chat-v1.0.Q4_0.llamafile
-go-ollama-start:
-	ollama run tinyllama:1.1b-chat
+	./server/cpp-llamafile/gemma-2-2b-it.Q4_0.llamafile
+# go-ollama-start:  # ollama is a daemon
+# 	ollama run gemma2:2b-instruct-q4_0t
 py-huggingface-start:
 	cd server/py-huggingface && uv run uvicorn main:app --port 8080

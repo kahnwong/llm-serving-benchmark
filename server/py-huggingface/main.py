@@ -1,16 +1,19 @@
 import torch
 from fastapi import FastAPI
 from pydantic import BaseModel
-from transformers import pipeline
+from transformers import AutoModelForCausalLM
+from transformers import AutoTokenizer
 
 
-pipe = pipeline(
-    "text-generation",
-    model="TinyLlama/TinyLlama-1.1B-Chat-v1.0",
-    torch_dtype=torch.bfloat16,
+# init: huggingface
+tokenizer = AutoTokenizer.from_pretrained("google/gemma-2-2b-it")
+model = AutoModelForCausalLM.from_pretrained(
+    "google/gemma-2-2b-it",
     device_map="auto",
+    torch_dtype=torch.bfloat16,
 )
 
+# init: fastapi
 app = FastAPI(title="py-huggingface")
 
 
@@ -19,26 +22,10 @@ class RequestItem(BaseModel):
     content: str
 
 
+# routes
 @app.post("/")
 async def main(request: RequestItem):
-    messages = [
-        {
-            "role": "system",
-            "content": "You are a helpful AI assistant.",
-        },
-        {"role": "user", "content": request.content},
-    ]
+    input_ids = tokenizer(request.content, return_tensors="pt").to(model.device)
+    outputs = model.generate(**input_ids, max_new_tokens=2048)
 
-    prompt = pipe.tokenizer.apply_chat_template(
-        messages, tokenize=False, add_generation_prompt=True
-    )
-    outputs = pipe(
-        prompt,
-        max_new_tokens=256,
-        do_sample=True,
-        temperature=0.7,
-        top_k=50,
-        top_p=0.95,
-    )
-
-    return {"content": (outputs[0]["generated_text"])}
+    return {"content": tokenizer.decode(outputs[0])}

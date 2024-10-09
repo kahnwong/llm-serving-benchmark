@@ -5,6 +5,6 @@ Ref: <https://github.com/Mozilla-Ocho/llamafile>
 ## Setup
 
 ```bash
-wget https://huggingface.co/Mozilla/TinyLlama-1.1B-Chat-v1.0-llamafile/resolve/main/TinyLlama-1.1B-Chat-v1.0.Q4_0.llamafile
-chmod +x TinyLlama-1.1B-Chat-v1.0.Q4_0.llamafile
+wget https://huggingface.co/jartine/gemma-2-2b-it-llamafile/resolve/main/gemma-2-2b-it.Q4_0.llamafile
+chmod +x gemma-2-2b-it.Q4_0.llamafile
 ```

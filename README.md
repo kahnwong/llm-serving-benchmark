@@ -22,7 +22,7 @@
 
 ## Base Model
 
-TinyLlama-1.1B-Chat-v1.0
+gemma-2-2b-it
 
 
 ## Init
