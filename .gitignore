@@ -1,9 +1,8 @@
 # data
 results
 *.log
-
-# llamafile
 *.llamafile
+*.gguf
 
 # python
 .venv

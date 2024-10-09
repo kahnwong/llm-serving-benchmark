@@ -5,6 +5,7 @@
 | Language | Framework   |
 |----------|-------------|
 | C++      | Llamafile   |
+| C++      | llama.cpp   |
 | Go       | Ollama      |
 | Python   | HuggingFace |
 | Rust     | mistral.rs  |
