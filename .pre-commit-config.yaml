@@ -22,7 +22,7 @@ repos:
       - id: yamlfmt
         args: [--mapping, "2", --sequence, "4", --offset, "2", --width, "150", --preserve-quotes]
         exclude: ^.github/dependabot.yaml
-#        exclude: (sops\.yaml)$
+  #        exclude: (sops\.yaml)$
   - repo: https://github.com/jumanjihouse/pre-commit-hooks
     rev: 3.0.0
     hooks:
@@ -43,3 +43,11 @@ repos:
     rev: v3.13.0
     hooks:
       - id: reorder-python-imports
+  - repo: https://github.com/nbQA-dev/nbQA
+    rev: 1.8.7
+    hooks:
+      - id: nbqa-black
+  - repo: https://github.com/kynan/nbstripout
+    rev: 0.7.1
+    hooks:
+      - id: nbstripout
