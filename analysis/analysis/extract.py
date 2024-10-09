@@ -35,13 +35,23 @@ def extract_stats():
 
     # init variables
     stats_all = []
-    times_all = {}
+    times_all = []
 
     for filename in filenames:
         framework, times, stats = parse_stats(filename)
 
+        # stats
         stats.update({"framework": framework})
         stats_all.append(stats)
-        times_all[framework] = times
+
+        # time
+        for index, time in enumerate(times):
+            times_all.append(
+                {
+                    "framework": framework,
+                    "index": index,
+                    "time": time,
+                }
+            )
 
     return times_all, stats_all
