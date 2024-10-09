@@ -28,6 +28,7 @@ def extract_stats():
     # define result files
     filenames = [
         "cpp-llamafile.json",
+        "cpp-llamacpp.json",
         "go-ollama.json",
         "py-huggingface.json",
         "rs-mistralrs.json",
